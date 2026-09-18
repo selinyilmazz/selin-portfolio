@@ -1,81 +1,88 @@
+import Reveal from './Reveal';
+
+const CONTACT_LINKS = [
+  {
+    label: 'Email',
+    value: 'sselinyilmazz01@gmail.com',
+    href: 'mailto:sselinyilmazz01@gmail.com',
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    ),
+  },
+  {
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/selin-yilmaz',
+    href: 'https://www.linkedin.com/in/selin-yilmaz-589461209/',
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h4v-9a4 4 0 00-8 0M17 20v-6a4 4 0 00-8 0v6M9 20H5V9h4v11zm-2-13a2 2 0 100-4 2 2 0 000 4z" />
+    ),
+  },
+  {
+    label: 'GitHub',
+    value: 'github.com/selinyilmazz',
+    href: 'https://github.com/selinyilmazz',
+    icon: (
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
+    ),
+  },
+];
+
 export default function Contact() {
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="section bg-cream-soft">
       <div className="container">
-        <h2 className="heading-2 text-warm-black mb-8">Get In Touch</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.85fr] gap-14 items-center">
           <div>
-            <h3 className="heading-3 text-warm-black mb-4">Contact Information</h3>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <span className="w-6 h-6 bg-deep-burgundy rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-ivory" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </span>
-                <span className="body-text text-warm-black">sselinyilmazz01@gmail.com</span>
-              </div>
-              
-              <div className="flex items-center">
-                <span className="w-6 h-6 bg-deep-burgundy rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-ivory" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                </span>
-                <span className="body-text text-warm-black">+90 555 555 5555</span>
-              </div>
-              
-              <div className="flex items-center">
-                <span className="w-6 h-6 bg-deep-burgundy rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-ivory" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </span>
-                <span className="body-text text-warm-black">Istanbul, Turkey</span>
-              </div>
-            </div>
+            <Reveal>
+              <span className="eyebrow text-stone-dark flex items-center gap-3 mb-4">
+                Get In Touch
+                <span className="h-px w-10 bg-burgundy inline-block" />
+              </span>
+            </Reveal>
+            <Reveal delay={80}>
+              <h2 className="heading-2 text-ink mb-6">
+                Let&apos;s Build
+                <br />
+                Something Great
+              </h2>
+            </Reveal>
+            <Reveal delay={140}>
+              <p className="body-text text-ink/75 max-w-md mb-10">
+                I&apos;m always open to new opportunities, interesting projects or just a
+                friendly chat.
+              </p>
+            </Reveal>
+            <Reveal delay={200}>
+              <a href="mailto:sselinyilmazz01@gmail.com" className="button-primary">
+                Say Hello
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+            </Reveal>
           </div>
-          
-          <div>
-            <form className="space-y-4">
-              <div>
-                <label htmlFor="name" className="block body-text text-warm-black mb-2">Name</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  className="w-full px-4 py-2 border border-warm-gray rounded-md focus:outline-none focus:ring-2 focus:ring-deep-burgundy focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block body-text text-warm-black mb-2">Email</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  className="w-full px-4 py-2 border border-warm-gray rounded-md focus:outline-none focus:ring-2 focus:ring-deep-burgundy focus:border-transparent"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block body-text text-warm-black mb-2">Message</label>
-                <textarea 
-                  id="message" 
-                  rows={4}
-                  className="w-full px-4 py-2 border border-warm-gray rounded-md focus:outline-none focus:ring-2 focus:ring-deep-burgundy focus:border-transparent"
-                  required
-                ></textarea>
-              </div>
-              
-              <button 
-                type="submit" 
-                className="button-primary w-full"
-              >
-                Send Message
-              </button>
-            </form>
+
+          <div className="flex flex-col gap-4">
+            {CONTACT_LINKS.map((item, i) => (
+              <Reveal key={item.label} delay={120 + i * 90}>
+                <a
+                  href={item.href}
+                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="hover-lift group flex items-center gap-5 bg-cream border border-stone rounded-sm px-6 py-5 transition-colors duration-300 hover:border-burgundy"
+                >
+                  <span className="h-11 w-11 shrink-0 rounded-full bg-burgundy/10 flex items-center justify-center group-hover:bg-burgundy group-hover:scale-110 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-burgundy group-hover:text-cream transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      {item.icon}
+                    </svg>
+                  </span>
+                  <span>
+                    <span className="caption block mb-1">{item.label}</span>
+                    <span className="body-text text-sm text-ink">{item.value}</span>
+                  </span>
+                </a>
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>

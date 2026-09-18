@@ -1,37 +1,59 @@
+import Reveal from './Reveal';
+
+const EXPERIENCE = [
+  {
+    role: 'Hardware Team Intern',
+    org: 'Unico',
+    period: '2026 — Present',
+    description:
+      'Interning on the hardware team, working remotely from the Netherlands. Ramping up on Proxmox VE and self-hosted GitHub Actions runners while following project work led by the team lead.',
+    tags: ['Proxmox VE', 'GitHub Actions', 'Linux'],
+  },
+  {
+    role: 'Unity Developer',
+    org: 'Independent Projects',
+    period: '2022 — 2023',
+    description: 'Created interactive playable ads and game prototypes.',
+    tags: ['Unity', 'C#'],
+  },
+];
+
 export default function Experience() {
   return (
-    <section id="experience" className="section bg-gray-100">
+    <section id="experience" className="section bg-cream">
       <div className="container">
-        <h2 className="heading-2 text-warm-black mb-8">Experience</h2>
-        <div className="space-y-8">
-          <div className="bg-ivory p-6 rounded-md shadow-sm border border-warm-gray">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-              <h3 className="heading-3 text-warm-black">Software Developer Intern</h3>
-              <span className="caption text-deep-burgundy">2023 - Present</span>
-            </div>
-            <p className="body-text text-warm-black mb-4">
-              Developed web applications and contributed to AI projects.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-warm-gray text-warm-black rounded-full text-sm">React</span>
-              <span className="px-3 py-1 bg-warm-gray text-warm-black rounded-full text-sm">Node.js</span>
-              <span className="px-3 py-1 bg-warm-gray text-warm-black rounded-full text-sm">Python</span>
-            </div>
-          </div>
-          
-          <div className="bg-ivory p-6 rounded-md shadow-sm border border-warm-gray">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4">
-              <h3 className="heading-3 text-warm-black">Unity Developer</h3>
-              <span className="caption text-deep-burgundy">2022 - 2023</span>
-            </div>
-            <p className="body-text text-warm-black mb-4">
-              Created interactive playable ads and game prototypes.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-warm-gray text-warm-black rounded-full text-sm">Unity</span>
-              <span className="px-3 py-1 bg-warm-gray text-warm-black rounded-full text-sm">C#</span>
-            </div>
-          </div>
+        <Reveal>
+          <span className="eyebrow text-stone-dark flex items-center gap-3 mb-4">
+            Experience
+            <span className="h-px w-10 bg-burgundy inline-block" />
+          </span>
+        </Reveal>
+        <Reveal delay={60}>
+          <h2 className="heading-2 text-ink mb-12">Where I&apos;ve Worked</h2>
+        </Reveal>
+
+        <div className="relative max-w-3xl">
+          <span className="hidden sm:block absolute left-[5px] top-2 bottom-2 w-px bg-stone" />
+          {EXPERIENCE.map((item, i) => (
+            <Reveal key={item.role} delay={100 + i * 120}>
+              <div className="relative sm:pl-12 pb-12 last:pb-0">
+                <span className="hidden sm:block absolute left-0 top-1.5 h-2.5 w-2.5 rounded-full bg-burgundy ring-4 ring-cream" />
+                <span className="caption text-burgundy block mb-3">{item.period}</span>
+                <div className="flex flex-wrap items-baseline gap-x-3 mb-3">
+                  <h3 className="heading-3 text-ink text-xl">{item.role}</h3>
+                  <span className="text-sm text-stone-dark">— {item.org}</span>
+                </div>
+                <p className="body-text text-ink/75 mb-4 max-w-xl">{item.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {item.tags.map((tag) => (
+                    <span key={tag} className="tag-pill text-xs">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
