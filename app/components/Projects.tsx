@@ -13,6 +13,9 @@ type Project = {
   category: string;
   description: string;
   tags: string[];
+  /** External link to the live project. `null` means the link isn't ready yet
+   *  (no placeholder/invented URL is used — the card just isn't clickable). */
+  url: string | null;
 };
 
 const PROJECTS: Project[] = [
@@ -24,6 +27,7 @@ const PROJECTS: Project[] = [
     description:
       'A modern news platform with AI summaries, real-time information and a clean, minimal interface.',
     tags: ['Next.js', 'Supabase', 'AI'],
+    url: 'https://news.selinyilmaz.dev',
   },
   {
     image: '/images/projects/aventra.jpg',
@@ -33,6 +37,7 @@ const PROJECTS: Project[] = [
     description:
       'An AI-powered travel guide and companion — combining AI travel assistance, maps, digital tour guides and a personal travel memory notebook.',
     tags: ['AI-Powered', 'Travel Tech', 'Maps & Location'],
+    url: 'https://play.google.com/store/apps/details?id=com.aventraapp.aventra&hl=tr',
   },
   {
     image: '/images/projects/market-price-comparison.jpg',
@@ -42,6 +47,7 @@ const PROJECTS: Project[] = [
     description:
       'Compare market prices across different platforms with a fast and user-friendly interface.',
     tags: ['Python', 'FastAPI', 'PostgreSQL'],
+    url: null,
   },
   {
     image: '/images/projects/playable-ad-generator.jpg',
@@ -51,6 +57,7 @@ const PROJECTS: Project[] = [
     description:
       'Automation tool for generating playable ads in casual puzzle games.',
     tags: ['Unity', 'C#', 'Game Dev'],
+    url: 'https://playable.selinyilmaz.dev',
   },
   {
     image: '/images/projects/unity-auto-playbot.jpg',
@@ -60,6 +67,7 @@ const PROJECTS: Project[] = [
     description:
       'An automated bot built in Unity that plays through generated playable-ad builds to catch issues early, developed during my internship at Unico.',
     tags: ['Unity', 'C#', 'Automation'],
+    url: null,
   },
 ];
 
@@ -72,36 +80,25 @@ function ProjectCard({
   index: number;
   reducedMotion: boolean;
 }) {
-  const cardRef = useRef<HTMLAnchorElement>(null);
-
-  const handleMouseMove = (event: ReactMouseEvent<HTMLAnchorElement>) => {
-    if (reducedMotion || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
+  const handleMouseMove = (event: ReactMouseEvent<HTMLElement>) => {
+    if (reducedMotion) return;
+    const el = event.currentTarget;
+    const rect = el.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width;
     const py = (event.clientY - rect.top) / rect.height;
     const rotateY = (px - 0.5) * 7;
     const rotateX = (0.5 - py) * 5;
-    cardRef.current.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+    el.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
   };
 
-  const handleMouseLeave = () => {
-    if (!cardRef.current) return;
-    cardRef.current.style.transform = reducedMotion
+  const handleMouseLeave = (event: ReactMouseEvent<HTMLElement>) => {
+    event.currentTarget.style.transform = reducedMotion
       ? ''
       : 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
   };
 
-  return (
-    <a
-      ref={cardRef}
-      href="https://github.com/selinyilmazz"
-      target="_blank"
-      rel="noopener noreferrer"
-      data-card
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="tilt-card group relative shrink-0 snap-start w-[80vw] sm:w-[360px] rounded-sm border border-cream/10 bg-ink-soft overflow-hidden flex flex-col"
-    >
+  const cardContent = (
+    <>
       <div className="relative h-48 sm:h-52 overflow-hidden border-b border-cream/10 bg-ink">
         <Image
           src={project.image}
@@ -114,11 +111,13 @@ function ProjectCard({
         <span className="absolute top-4 left-4 caption text-cream bg-ink/70 px-2.5 py-1 rounded-sm">
           {String(index + 1).padStart(2, '0')}
         </span>
-        <span className="absolute top-4 right-4 h-8 w-8 rounded-full border border-cream/30 bg-ink/50 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:border-burgundy group-hover:bg-burgundy transition-all duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
-          </svg>
-        </span>
+        {project.url && (
+          <span className="absolute top-4 right-4 h-8 w-8 rounded-full border border-cream/30 bg-ink/50 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:border-burgundy group-hover:bg-burgundy transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-cream" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+            </svg>
+          </span>
+        )}
       </div>
 
       <div className="p-6 flex flex-col flex-1">
@@ -134,21 +133,57 @@ function ProjectCard({
             </span>
           ))}
         </div>
-        <div className="flex items-center gap-2 pt-4 border-t border-cream/10 text-sm text-cream/80 group-hover:text-burgundy-light transition-colors duration-300">
-          View Project
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+        <div className="flex items-center gap-2 pt-4 border-t border-cream/10 text-sm">
+          {project.url ? (
+            <span className="flex items-center gap-2 text-cream/80 group-hover:text-burgundy-light transition-colors duration-300">
+              View Project
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          ) : (
+            <span className="text-cream/40">Link coming soon</span>
+          )}
         </div>
       </div>
-    </a>
+    </>
+  );
+
+  const className =
+    'tilt-card group relative shrink-0 snap-start w-[80vw] sm:w-[360px] rounded-sm border border-cream/10 bg-ink-soft overflow-hidden flex flex-col';
+
+  if (project.url) {
+    return (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        data-card
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className={className}
+      >
+        {cardContent}
+      </a>
+    );
+  }
+
+  return (
+    <div
+      data-card
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className={`${className} cursor-default`}
+    >
+      {cardContent}
+    </div>
   );
 }
 
