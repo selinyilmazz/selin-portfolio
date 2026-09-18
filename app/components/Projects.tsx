@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import type { MouseEvent as ReactMouseEvent, PointerEvent as ReactPointerEvent } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
 import Image from 'next/image';
 import Reveal from './Reveal';
 import useReducedMotion from './useReducedMotion';
@@ -189,7 +189,6 @@ function ProjectCard({
 
 export default function Projects() {
   const railRef = useRef<HTMLDivElement>(null);
-  const dragState = useRef({ isDown: false, startX: 0, scrollLeft: 0 });
   const [activeIndex, setActiveIndex] = useState(0);
   const reducedMotion = useReducedMotion();
 
@@ -245,22 +244,6 @@ export default function Projects() {
     return () => node.removeEventListener('scroll', onScroll);
   }, []);
 
-  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== 'mouse' || !railRef.current) return;
-    dragState.current = { isDown: true, startX: event.clientX, scrollLeft: railRef.current.scrollLeft };
-    railRef.current.setPointerCapture(event.pointerId);
-  };
-
-  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (!dragState.current.isDown || !railRef.current) return;
-    const dx = event.clientX - dragState.current.startX;
-    railRef.current.scrollLeft = dragState.current.scrollLeft - dx;
-  };
-
-  const endDrag = () => {
-    dragState.current.isDown = false;
-  };
-
   return (
     <section id="projects" className="section bg-ink text-cream">
       <div className="container">
@@ -314,11 +297,7 @@ export default function Projects() {
         <Reveal delay={220}>
           <div
             ref={railRef}
-            onPointerDown={onPointerDown}
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerLeave={endDrag}
-            className="rail-grab flex gap-6 overflow-x-auto no-scrollbar pb-4 snap-x snap-mandatory scroll-pl-1"
+            className="flex gap-6 overflow-x-auto no-scrollbar pb-4 snap-x snap-mandatory scroll-pl-1"
           >
             {PROJECTS.map((project, i) => (
               <ProjectCard key={project.name} project={project} index={i} reducedMotion={reducedMotion} />
